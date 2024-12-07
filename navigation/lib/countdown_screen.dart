@@ -1,70 +1,61 @@
 import 'package:flutter/material.dart';
 
-// Model untuk menerima data argument di halaman Countdown
 class CountdownArgs {
   final DateTime selectedDate;
-  final DateTime currentDate;
-
-  CountdownArgs({
-    required this.selectedDate,
-    required this.currentDate,
-  });
+  CountdownArgs({required this.selectedDate});
 }
 
-// Halaman untuk menampilkan countdown waktu
 class CountdownScreen extends StatelessWidget {
   final CountdownArgs args;
 
-  // Konstruktor dengan parameter args
-  const CountdownScreen({required this.args, Key? key}) : super(key: key);
+  CountdownScreen({required this.args});
 
   @override
   Widget build(BuildContext context) {
-    // Menghitung sisa waktu (durasi) antara tanggal saat ini dan tanggal yang dipilih
-    final duration = args.selectedDate.difference(args.currentDate);
+    int daysRemaining = args.selectedDate.difference(DateTime.now()).inDays;
+
+    void navigateCountdown(int days) {
+      if (days > 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CountdownScreen(
+              args: CountdownArgs(
+                selectedDate: DateTime.now().add(Duration(days: days - 1)),
+              ),
+            ),
+          ),
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hitung Mundur'),
-        backgroundColor: Colors.deepOrange,
+        title: Text('Countdown'),
+        backgroundColor: daysRemaining.isEven ? Colors.orange : Colors.purple,
       ),
       body: Container(
-        color: Colors.deepOrange.shade50,
-        padding: const EdgeInsets.all(16.0), // Memberikan padding untuk estetika
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Judul utama
-            const Text(
-              'Waktu Tersisa:',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            // Menampilkan durasi yang tersisa dalam format hari, jam, menit, dan detik
-            Text(
-              '${duration.inDays} Hari\n${duration.inHours % 24} Jam\n${duration.inMinutes % 60} Menit\n${duration.inSeconds % 60} Detik',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 30, color: Colors.deepOrange),
-            ),
-            const SizedBox(height: 20),
-            // Tombol kembali ke halaman utama
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepOrange,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+        color: daysRemaining.isEven ? Colors.orange.shade100 : Colors.purple.shade100,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Tanggal yang kamu nantikan tersisa:',
+                style: TextStyle(fontSize: 18),
               ),
-              child: const Text(
-                'Kembali',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+              Text(
+                '$daysRemaining Hari',
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: () => navigateCountdown(daysRemaining),
+                child: Text(daysRemaining > 1 ? 'Lanjutkan' : 'Selesai'),
+              ),
+            ],
+          ),
         ),
       ),
     );
