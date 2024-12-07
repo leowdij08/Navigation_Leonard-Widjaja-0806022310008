@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';  // Import Lottie
 import 'date_provider.dart';
 import 'countdown_screen.dart';
 import 'bottom_nav_bar.dart';
@@ -30,6 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Animasi Lottie di atas teks
+                Lottie.asset(
+                  'assets/animasi1.json', // Pastikan animasi1.json ada di folder assets
+                  width: 200,  // Ukuran animasi
+                  height: 200, // Ukuran animasi
+                ),
+                SizedBox(height: 2), // Memberikan ruang antara animasi dan teks
                 Text(
                   'Selamat Datang di Aplikasi Hitung Mundur!',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
