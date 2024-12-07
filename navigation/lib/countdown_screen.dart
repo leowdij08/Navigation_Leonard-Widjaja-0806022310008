@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Kelas untuk menerima argumen tanggal yang dipilih
 class CountdownArgs {
   final DateTime selectedDate;
   CountdownArgs({required this.selectedDate});
@@ -8,6 +9,7 @@ class CountdownArgs {
 class CountdownScreen extends StatelessWidget {
   final CountdownArgs args;
 
+  // Konstruktor untuk menerima argumen CountdownArgs
   CountdownScreen({required this.args});
 
   @override
@@ -30,6 +32,7 @@ class CountdownScreen extends StatelessWidget {
           ),
         );
       } else {
+        // Jika countdown selesai, kembali ke halaman utama
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
     }
@@ -43,7 +46,7 @@ class CountdownScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Countdown'),
-          backgroundColor: daysRemaining.isEven ? Colors.orange : Colors.purple,
+          backgroundColor: daysRemaining.isEven ? Colors.orange : Colors.purple, // Warna appbar bergantung pada sisa hari
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -53,7 +56,7 @@ class CountdownScreen extends StatelessWidget {
           ),
         ),
         body: Container(
-          color: daysRemaining.isEven ? Colors.orange.shade100 : Colors.purple.shade100,
+          color: daysRemaining.isEven ? Colors.orange.shade100 : Colors.purple.shade100, // Warna background bergantung pada sisa hari
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,11 +66,11 @@ class CountdownScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
-                  '$daysRemaining Hari',
+                  '$daysRemaining Hari', // Menampilkan jumlah hari yang tersisa
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton(
-                  onPressed: () => navigateCountdown(daysRemaining),
+                  onPressed: () => navigateCountdown(daysRemaining), // Aksi tombol bergantung pada sisa hari
                   child: Text(daysRemaining > 1 ? 'Lanjutkan' : 'Selesai'),
                 ),
               ],
