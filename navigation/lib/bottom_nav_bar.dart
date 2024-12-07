@@ -19,10 +19,24 @@ class BottomNavBar extends StatelessWidget {
         }
       },
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-        BottomNavigationBarItem(icon: Icon(Icons.feedback), label: 'Feedback'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.history),
+          label: 'History',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.feedback),
+          label: 'Feedback',
+        ),
       ],
+      // Menambahkan warna senada pada BottomNavBar
+      backgroundColor: Colors.deepOrange.shade50, // Latar belakang BottomNavBar
+      selectedItemColor: Colors.deepOrange, // Warna item yang dipilih
+      unselectedItemColor: Colors.deepOrange.shade200, // Warna item yang tidak dipilih
+      showUnselectedLabels: true, // Menampilkan label item yang tidak dipilih
     );
   }
 }
