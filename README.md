@@ -57,7 +57,15 @@ Dalam aplikasi ini, navigasi lanjutan diterapkan untuk memungkinkan transisi yan
 
 8. **Desain Responsif**:
    - UI aplikasi dioptimalkan untuk dapat menyesuaikan dengan berbagai ukuran layar, memastikan aplikasi terlihat baik di perangkat ponsel dan tablet.
-
+  
+9. **Countdown**
+    - User akan dipindahkan ke halaman, sesuai dengan jangka waktu hari ke tanggal yang dipilih. Apabila jangka waktunya 100 hari, maka akan ada 100 halaman aplikasi yang menanti user untuk ditelusuri.
+  
+10. **History**
+    - User dapat melihat semua list tanggal yang di search sebelumnya, lalu kembali melakukan countdown ketika memencet tanggalnya.
+    
+11. **Feedback**
+    - User dapat memberikan feedback untuk aplikasi dengan mengisi nama, e-mail, serta masukannya, agar kelak kami dapat memperbaiki apa yang masih dianggap kurang untuk aplikasi.
 ## Cara Menjalankan Aplikasi
 
 1. Clone repository ini:
