@@ -21,15 +21,15 @@ class BottomNavBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Home',
+          label: 'Beranda',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.history),
-          label: 'History',
+          label: 'Riwayat',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.feedback),
-          label: 'Feedback',
+          label: 'Ulasan',
         ),
       ],
       // Menambahkan warna senada pada BottomNavBar

@@ -6,7 +6,7 @@ class FeedbackScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Feedback'),
+        title: const Text('Form Ulasan'),
         backgroundColor: Colors.brown,
       ),
       bottomNavigationBar: BottomNavBar(currentIndex: 2),
