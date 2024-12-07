@@ -10,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _dateController = TextEditingController();
   DateTime? _selectedDate;
 
   @override
@@ -18,12 +17,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Alat Penghitung Tanggal'),
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: Colors.brown,
       ),
       bottomNavigationBar: BottomNavBar(currentIndex: 0),
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.pink.shade50,
+          color: Colors.brown.shade100,
         ),
         child: Center(
           child: Padding(
@@ -33,48 +32,49 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(
                   'Selamat Datang di Aplikasi Hitung Mundur!',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20),
                 Text(
                   'Input Tanggal yang Ingin Kamu Hitung Mundur',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.brown),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _dateController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Tanggal (DD-MM-YYYY)',
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.calendar_today),
-                            onPressed: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime.now().add(Duration(days: 365)),
-                              );
-                              if (pickedDate != null) {
-                                setState(() {
-                                  _selectedDate = pickedDate;
-                                  _dateController.text =
-                                      "${pickedDate.day.toString().padLeft(2, '0')}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.year}";
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                        readOnly: true,
-                      ),
-                    ),
+                    _buildDateBox('Hari', _selectedDate?.day ?? '--'),
+                    SizedBox(width: 8),
+                    _buildDateBox('Bulan', _selectedDate?.month ?? '--'),
+                    SizedBox(width: 8),
+                    _buildDateBox('Tahun', _selectedDate?.year ?? '----'),
                   ],
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 365)),
+                    );
+                    if (pickedDate != null) {
+                      setState(() {
+                        _selectedDate = pickedDate;
+                      });
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.brown,
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  ),
+                  child: Text(
+                    'Pilih Tanggal',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
@@ -92,13 +92,46 @@ class _HomeScreenState extends State<HomeScreen> {
                       _showErrorDialog(context, 'Silakan pilih tanggal terlebih dahulu.');
                     }
                   },
-                  child: Text('Hitung Mundur'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.brown.shade600,
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  ),
+                  child: Text(
+                    'Hitung Mundur',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildDateBox(String label, dynamic value) {
+    return Column(
+      children: [
+        Container(
+          width: 60,
+          height: 60,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.brown),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            value.toString(),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.brown),
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          label,
+          style: TextStyle(fontSize: 14, color: Colors.brown),
+        ),
+      ],
     );
   }
 
