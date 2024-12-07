@@ -12,11 +12,14 @@ class CountdownScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int daysRemaining = args.selectedDate.difference(DateTime.now()).inDays;
+    // Menghitung sisa waktu berdasarkan selisih hingga detik
+    int daysRemaining = args.selectedDate.difference(DateTime.now()).inDays +
+        (args.selectedDate.difference(DateTime.now()).inSeconds % 86400 > 0 ? 1 : 0);
 
+    // Fungsi untuk navigasi ke layar berikutnya
     void navigateCountdown(int days) {
       if (days > 1) {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => CountdownScreen(
@@ -31,30 +34,44 @@ class CountdownScreen extends StatelessWidget {
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Countdown'),
-        backgroundColor: daysRemaining.isEven ? Colors.orange : Colors.purple,
-      ),
-      body: Container(
-        color: daysRemaining.isEven ? Colors.orange.shade100 : Colors.purple.shade100,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Tanggal yang kamu nantikan tersisa:',
-                style: TextStyle(fontSize: 18),
-              ),
-              Text(
-                '$daysRemaining Hari',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-              ),
-              ElevatedButton(
-                onPressed: () => navigateCountdown(daysRemaining),
-                child: Text(daysRemaining > 1 ? 'Lanjutkan' : 'Selesai'),
-              ),
-            ],
+    return WillPopScope(
+      onWillPop: () async {
+        // Mengatur tombol Back membawa pengguna kembali ke HomeScreen
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        return false; // Mencegah back default
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Countdown'),
+          backgroundColor: daysRemaining.isEven ? Colors.orange : Colors.purple,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              // Navigasi langsung ke HomeScreen
+              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            },
+          ),
+        ),
+        body: Container(
+          color: daysRemaining.isEven ? Colors.orange.shade100 : Colors.purple.shade100,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Tanggal yang kamu nantikan tersisa:',
+                  style: TextStyle(fontSize: 18),
+                ),
+                Text(
+                  '$daysRemaining Hari',
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                ),
+                ElevatedButton(
+                  onPressed: () => navigateCountdown(daysRemaining),
+                  child: Text(daysRemaining > 1 ? 'Lanjutkan' : 'Selesai'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
